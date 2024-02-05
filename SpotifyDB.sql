@@ -1,0 +1,32 @@
+CREATE TABLE Users (
+    UserID INT PRIMARY KEY AUTO_INCREMENT,
+    UserName VARCHAR(50) NOT NULL,
+    Email VARCHAR(100) NOT NULL UNIQUE,
+    Password VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE Songs (
+    SongID INT PRIMARY KEY AUTO_INCREMENT,
+    Title VARCHAR(100) NOT NULL,
+    Artist VARCHAR(50) NOT NULL,
+    Album VARCHAR(50),
+    ReleaseYear INT,
+    Genre VARCHAR(50),
+    DurationInSeconds INT,
+    URL VARCHAR(255) NOT NULL UNIQUE
+);
+
+CREATE TABLE Playlists (
+    PlaylistID INT PRIMARY KEY AUTO_INCREMENT,
+    PlaylistName VARCHAR(50) NOT NULL,
+    UserID INT,
+    FOREIGN KEY (UserID) REFERENCES Users(UserID) ON DELETE CASCADE
+);
+
+CREATE TABLE PlaylistSongs (
+    PlaylistID INT,
+    SongID INT,
+    PRIMARY KEY (PlaylistID, SongID),
+    FOREIGN KEY (PlaylistID) REFERENCES Playlists(PlaylistID) ON DELETE CASCADE,
+    FOREIGN KEY (SongID) REFERENCES Songs(SongID) ON DELETE CASCADE
+);
